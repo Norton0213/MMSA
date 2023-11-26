@@ -3,6 +3,7 @@
     "dataset_root_dir": "E:\\MSADatasets",
     "mosi": {
       "aligned": {
+
         "featurePath": "E:\\MSADatasets\\SIMS\\Processed\\unaligned_39.pkl",
         "seq_lens": [50, 50, 50],
         "feature_dims": [768, 5, 20],
@@ -14,7 +15,7 @@
         "missing_seed": [1111, 1111, 1111]
       },
       "unaligned": {
-        "featurePath": "MOSI/Processed/unaligned_50.pkl",
+        "featurePath": "E:\\MSADatasets\\MOSI\\Processed\\unaligned_50.pkl",
         "seq_lens": [50, 500, 375],
         "feature_dims": [768, 5, 20],
         "train_samples": 1284,
@@ -27,7 +28,7 @@
     },
     "mosei": {
       "aligned": {
-        "featurePath": "MOSEI/Processed/aligned_50.pkl",
+        "featurePath": "E:\\MSADatasets\\MOSEI\\Processed\\unaligned_50_mosei.pkl",
         "seq_lens": [50, 50, 50],
         "feature_dims": [768, 74, 35],
         "train_samples": 16326,
@@ -38,7 +39,7 @@
         "missing_seed": [1111, 1111, 1111]
       },
       "unaligned": {
-        "featurePath": "MOSEI/Processed/unaligned_50.pkl",
+        "featurePath": "E:\\MSADatasets\\MOSEI\\Processed\\unaligned_50_mosei.pkl",
         "seq_lens": [50, 500, 375],
         "feature_dims": [768, 74, 35],
         "train_samples": 16326,
@@ -51,11 +52,11 @@
     },
     "sims": {
       "unaligned": {
-        "featurePath": "E:\\MSADatasets\\SIMS\\Processed\\unaligned_39.pkl",
+        "featurePath": "E:\\ch-sims2s\\ch-simsv2s.pkl",
         "seq_lens": [39, 400, 55],
         "feature_dims": [768, 33, 709],
         "train_samples": 1368,
-        "num_classes": 4,
+        "num_classes": 2,
         "language": "cn",
         "KeyEval": "Loss",
         "missing_rate": [0.2, 0.2, 0.2],
@@ -228,37 +229,69 @@
       }
     }
   },
-  "ef_lstm": {
+  "avmfa_conformer": {
     "commonParams": {
       "need_data_aligned": true,
-      "need_model_aligned": true,
+      "need_model_aligned": false,
       "need_normalized": false,
-      "early_stop": 8
+      "early_stop": 8,
+      "use_bert": true
     },
     "datasetParams": {
       "mosi": {
-        "hidden_dims": 128,
+        "hidden_dims": 64,
         "num_layers": 4,
         "dropout": 0.5,
-        "batch_size": 32,
+        "batch_size": 16,
         "learning_rate": 0.001,
         "weight_decay": 0.005
       },
       "mosei": {
-        "hidden_dims": 256,
+        "hidden_dims": 64,
         "num_layers": 2,
-        "dropout": 0.4,
-        "batch_size": 128,
-        "learning_rate": 0.005,
-        "weight_decay": 0.0001
+        "dropout": 0.5,
+        "batch_size": 32,
+        "learning_rate": 0.0005,
+        "weight_decay": 0.005
       },
       "sims": {
-        "hidden_dims": 32,
+        "hidden_dims": 64,
         "num_layers": 3,
-        "dropout": 0.5,
-        "batch_size": 128,
+        "dropout": 0.5 ,
+        "batch_size": 16,
         "learning_rate": 0.0005,
-        "weight_decay": 0.001
+        "weight_decay": 0.005
+      }
+    }
+  },
+  "mavmfa_conformer": {
+    "commonParams": {
+      "need_data_aligned": false,
+      "need_model_aligned": false,
+      "need_normalized": false,
+      "early_stop": 8,
+      "use_bert": true
+    },
+    "datasetParams": {
+      "sims": {
+        "hidden_dims": [64, 64, 64, 64],
+        "num_layers": 1,
+        "text_out": 32,
+        "post_fusion_dim": 32,
+        "post_text_dim": 16,
+        "post_audio_dim": 4,
+        "post_video_dim": 32,
+        "dropouts": [0.5, 0.5, 0.5, 0.5],
+        "batch_size": 8,
+        "learning_rate": 0.0005,
+        "M": 0.6,
+        "T": 0.8,
+        "A": 0.2,
+        "V": 0.2,
+        "text_weight_decay": 0.0001,
+        "audio_weight_decay": 0.001,
+        "video_weight_decay": 0.0001,
+        "weight_decay": 0.005
       }
     }
   },
@@ -480,7 +513,7 @@
         "embed_dropout": 0.1,
         "res_dropout": 0.2,
         "dst_feature_dim_nheads": [50, 10],
-        "batch_size": 16,
+        "batch_size": 4,
         "learning_rate": 0.002,
         "nlevels": 2,
         "conv1d_kernel_size_l": 5,
@@ -791,6 +824,7 @@
       }
     }
   },
+
   "self_mm": {
     "commonParams": {
       "need_data_aligned": false,
